@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+    <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
+{% endblock %}
+
+{% block content %}
+
+<div id="game-board" class="mb-3" data-row-num= {{row_num}} data-col-num= {{col_num}} >
+    {% for col in range(col_num) %}
+        <div>
+            {% for col in range(col_num) %}
+                <div class="game-cell"
+                     data-coordinate-x="{{ col }}"
+                     data-coordinate-y="{{ col }}"
+                     data-index="{{ col*col_num + col }}"
+                ></div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
