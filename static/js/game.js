@@ -23,10 +23,10 @@ function collisionWall(snake) {
 function collisionSnake() {
     if (snake1.body[0] === snake2.body[0]) window.alert("TIE");
     for (elem of snake1.body){
-        if (elem[0] === snake1.x && elem[1] === snake1.y && snake1.body.length > 1 ) window.alert("Snake1 ate himself and dieded very badly")
+        if (elem[0] === snake1.x && elem[1] === snake1.y && snake1.body.length > 3 ) window.alert("Snake1 ate himself and dieded very badly")
     }
     for (elem of snake2.body){
-        if (elem[0] === snake2.x && elem[1] === snake2.y && snake2.body.length > 1 ) window.alert("Snake2 ate himself and dieded very badly")
+        if (elem[0] === snake2.x && elem[1] === snake2.y && snake2.body.length > 3 ) window.alert("Snake2 ate himself and dieded very badly")
     }
     for (elem of snake1.body){
         if (elem[0] === snake2.x && elem[1] === snake2.y) window.alert("Snake2 killed snake1")
@@ -69,18 +69,42 @@ function clear() {
 }
 
 
-function randomize_fruit() {
-    let i = Math.floor(Math.random() * 31);
-    let score = document.createElement("img");
-    score.src = 'static/images/apple.jpeg';
-    score.setAttribute("width", "20");
-    score.setAttribute("height", "20");
-    let fruit_to_put =  document.getElementById("table").rows[i].cells;
-    fruit_to_put[i].appendChild(score);
+function Create_Fruit() {
+    this.x = Math.floor(Math.random() * 31);
+    this.y = Math.floor(Math.random() * 31);
+    this.img = document.createElement("img");
+    this.img.src = "static/images/apple.png";
+    this.img.setAttribute("width", "20");
+    this.img.setAttribute("height", "20");
 }
 
 
-window.addEventListener('load', randomize_fruit);
+var fruit =  new Create_Fruit();
+
+
+function randomize_fruit() {
+    let fruit_to_put = document.getElementById("x"+fruit.x + "y"+fruit.y);
+    fruit_to_put.style.padding = 0;
+    fruit_to_put.appendChild(fruit.img);
+}
+
+
+window.addEventListener('load', randomize_fruit(fruit));
+
+
+
+function eat_fruit(snake) {
+    if (snake.x === fruit.x &&
+        snake.y === fruit.y) {
+        snake.body.push(snake.body[-1]);
+        let cell_empty = document.getElementById("x"+fruit.x + "y" + fruit.y);
+        cell_empty.style.padding = 10;
+        cell_empty.innerHTML = "";
+        fruit.x = Math.floor(Math.random() * 31);
+        fruit.y = Math.floor(Math.random() * 31);
+        randomize_fruit()
+        }
+}
 
 
 function game() {
@@ -93,6 +117,8 @@ function game() {
         collisionSnake();
         draw(snake1);
         draw(snake2);
+        eat_fruit(snake1);
+        eat_fruit(snake2)
 
     }, 500);
 
