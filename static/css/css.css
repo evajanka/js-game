@@ -3,3 +3,14 @@ body {
     font-family: 'Acme', sans-serif;
     color: black;
 }
+
+table {
+    display: block;
+    border-spacing: 0
+}
+
+td {
+    padding: 10px;
+    border: black 1px solid;
+}
+
