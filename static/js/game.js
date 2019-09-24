@@ -5,8 +5,8 @@ function Snake(x, y, dir, color) {
     this.dir = dir;
     this.color = color;
 }
-var snake1 = new Snake(15, 1, "right", "blue");
-var snake2 = new Snake(15, 30, "left", "green");
+var snake1 = new Snake(1, 1, "right", "blue");
+var snake2 = new Snake(30, 30, "left", "green");
 
 function draw(snake) {
     for (let i = 0; i < snake.body.length; i++) {
@@ -23,10 +23,10 @@ function collisionWall(snake) {
 function collisionSnake() {
     if (snake1.body[0] === snake2.body[0]) window.alert("TIE");
     for (elem of snake1.body){
-        if (elem[0] === snake1.x && elem[1] === snake1.y) window.alert("Snake1 ate himself and dieded very badly")
+        if (elem[0] === snake1.x && elem[1] === snake1.y && snake1.body.length > 1 ) window.alert("Snake1 ate himself and dieded very badly")
     }
     for (elem of snake2.body){
-        if (elem[0] === snake2.x && elem[1] === snake2.y) window.alert("Snake2 ate himself and dieded very badly")
+        if (elem[0] === snake2.x && elem[1] === snake2.y && snake2.body.length > 1 ) window.alert("Snake2 ate himself and dieded very badly")
     }
     for (elem of snake1.body){
         if (elem[0] === snake2.x && elem[1] === snake2.y) window.alert("Snake2 killed snake1")
