@@ -16,8 +16,9 @@ function move() {
 
 
 function randomize_fruit() {
+    let i = Math.floor(Math.random() * 31);
     let score = document.createElement("img");
-    score.src = 'static/apple.jpeg'
+    score.src = 'static/images/apple.jpeg';
     score.setAttribute("width", "20");
     score.setAttribute("height", "20");
     let fruit_to_put =  document.getElementById("table").rows[i].cells;
@@ -26,12 +27,6 @@ function randomize_fruit() {
 }
 
 
-window.addEventListener('load', () => { let i = Math.floor(Math.random() * 31);
-    let score = document.createElement("img");
-    score.src = 'static/apple.jpeg'
-    score.setAttribute("width", "20");
-    score.setAttribute("height", "20");
-    let fruit_to_put =  document.getElementById("table").rows[i].cells;
-    fruit_to_put[i].appendChild(score);});
+window.addEventListener('load', randomize_fruit);
 
 //game();
