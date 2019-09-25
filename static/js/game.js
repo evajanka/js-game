@@ -48,7 +48,6 @@ function move(snake) {
 }
 
 
-
 document.addEventListener("keydown", checkkeys);
 
 
@@ -85,6 +84,10 @@ function Create_Fruit() {
 var fruit =  new Create_Fruit();
 
 
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;}
+
+
 function randomize_fruit() {
     let fruit_to_put = document.getElementById("x"+fruit.x + "y"+fruit.y);
     fruit_to_put.style.padding = 0;
@@ -103,14 +106,14 @@ function eat_fruit(snake) {
         let cell_empty = document.getElementById("x"+fruit.x + "y" + fruit.y);
         cell_empty.style.padding = 10;
         cell_empty.innerHTML = "";
-        fruit.x = Math.floor(Math.random() * 31);
-        fruit.y = Math.floor(Math.random() * 31);
+        fruit.x = random(1, 31);
+        fruit.y = random(1, 31);
         randomize_fruit()
         }
 }
 
 
-function game() {
+function game_2players() {
     setInterval(function () {
         clear();
         move(snake1);
@@ -127,4 +130,25 @@ function game() {
 
 }
 
-game();
+function game_1player(){
+    setInterval(function () {
+        clear();
+        move(snake1);
+        collisionWall(snake1);
+        collisionSnake();
+        draw(snake1);
+        eat_fruit(snake1);
+
+    }, 500);
+
+}
+
+
+function main() {
+    if (document.cookie === "gamemode=one") game_1player();
+    else if (document.cookie === "gamemode=two") game_2players();
+
+}
+
+main();
+
