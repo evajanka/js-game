@@ -1,22 +1,30 @@
 body {
-    padding: 80px 20px;
-    background-image: url("../images/ricepaper.png");
-    background-repeat: repeat;
+    padding: 20px 28%;
     font-family: 'Acme', sans-serif;
     color: black;
+    overflow: hidden;
 }
 
-.game-cell {
-    cursor: pointer;
-    border: 1px solid black;
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    margin: 3px;
-    color: grey;
-    vertical-align: middle;
+table {
+    padding-top: 60px;
+    display: block;
+    border-spacing: 0
 }
 
-navbar {
-    background-color: transparent;
+td {
+    padding: 12px;
+    border: black 1px solid;
+}
+
+#alertbox {
+    position: fixed;
+    left: 39%;
+    margin-bottom: 20px;
+}
+
+
+#countdown {
+    position: fixed;
+    top: 30%;
+    left: 46%;
 }

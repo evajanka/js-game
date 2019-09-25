@@ -6,14 +6,18 @@
 
 {% block content %}
 
-<table id="table" style="display:block;border-spacing: 0">
-    {% for i in range(1,31,1) %}
-        <tr>
-            {% for j in range(1,31,1)%}
-                <td id="x{{ j }}y{{ i }}" style="padding: 10px;border: black 1px solid;"></td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-</table>
+
+    <div id ="alertbox" class="alert alert-info w-25 text-center" hidden role="alert"></div>
+    <div class="display-1 text-center" id="countdown"></div>
+    <table hidden id="board">
+        {% for i in range(1,31,1) %}
+            <tr>
+                {% for j in range(1,31,1) %}
+                    <td id="x{{ j }}y{{ i }}"></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
 
 {% endblock %}
