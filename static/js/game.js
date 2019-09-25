@@ -5,8 +5,10 @@ function Snake(x, y, dir, color) {
     this.dir = dir;
     this.color = color;
 }
+
 var snake1 = new Snake(1, 1, "right", "blue");
 var snake2 = new Snake(30, 30, "left", "green");
+
 
 function draw(snake) {
     for (let i = 0; i < snake.body.length; i++) {
@@ -48,6 +50,7 @@ function move(snake) {
 
 
 document.addEventListener("keydown", checkkeys);
+
 
 function checkkeys() {
     if (event.keyCode === 87 && snake1.dir !== "down") snake1.dir = "up";
