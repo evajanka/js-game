@@ -1,4 +1,4 @@
-function Snake(x, y, dir, color) {
+    function Snake(x, y, dir, color) {
     this.x = x;
     this.y = y;
     this.body = [[x, y]];
@@ -145,7 +145,11 @@ function game_1player(){
 
 
 function main() {
-    if (document.cookie === "gamemode=one") game_1player();
+    console.log(document.cookie);
+    if (document.cookie === "gamemode=one"){
+        game_1player();
+        console.log("1player")
+    }
     else if (document.cookie === "gamemode=two") game_2players();
 
 }

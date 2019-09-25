@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+
     return render_template('index.html')
 
 
@@ -18,9 +19,14 @@ def setcookie():
     gamemode = request.args.get("gamemode")
     redirect_to_index = redirect('/game')
     response = make_response(redirect_to_index)
-    response.set_cookie('gamecode', value=gamemode)
+    response.set_cookie('gamemode', value=gamemode)
     return response
 
+@app.route('/deletecookie')
+def deletecookie():
+    resp = make_response(redirect("/"))
+    resp.set_cookie('gamemode', expires=0)
+    return resp
 
 if __name__ == '__main__':
     app.run(debug=True)
