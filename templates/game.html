@@ -5,16 +5,17 @@
 {% endblock %}
 
 {% block content %}
-
-<table id="table" >
-    {% for i in range(1,31,1) %}
-        <tr>
-            {% for j in range(1,31,1)%}
-                <td id="x{{ j }}y{{ i }}"></td>
+<body class="game-body">
+    <div class="card">
+        <table id="table">
+            {% for i in range(1,31,1) %}
+                <tr>
+                    {% for j in range(1,31,1)%}
+                        <td id="x{{ j }}y{{ i }}"></td>
+                    {% endfor %}
+                </tr>
             {% endfor %}
-        </tr>
-    {% endfor %}
-</table>
-
-
+        </table>
+    </div>
+</body>
 {% endblock %}

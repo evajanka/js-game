@@ -1,20 +1,4 @@
-game-body {
-    padding: 80px 20px;
-    font-family: 'Acme', sans-serif;
-    color: black;
-}
-
-table {
-    display: block;
-    border-spacing: 0
-}
-
-td {
-    padding: 10px;
-    border: black 1px solid;
-}
-
-layout-body {
+layout {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -23,14 +7,13 @@ layout-body {
   main {
     flex: 1 0 auto;
   }
-
 .brand-logo >img {
 	width: 50px;
 	height: 50px;
 	margin-top: 5px;
 }
 
-/* Game modes */
+/* Menu - profile */
 .bg-card-user {
 	background: rgba(0,77,64,.5);
 	padding: 15px 0;
@@ -39,6 +22,7 @@ layout-body {
 	width: 120px;
 }
 
+/* FOOTER */
 footer .foot-text {
 	margin-top: 10px;
 }
