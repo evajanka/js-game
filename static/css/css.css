@@ -1,10 +1,12 @@
 game-body {
-    padding: 80px 20px;
+    padding: 20px 28%;
     font-family: 'Acme', sans-serif;
     color: black;
+    overflow: hidden;
 }
 
 table {
+    padding-top: 60px;
     display: block;
     border-spacing: 0
 }
@@ -41,4 +43,19 @@ layout-body {
 
 footer .foot-text {
 	margin-top: 10px;
+    padding: 12px;
+    border: black 1px solid;
+}
+
+#alertbox {
+    position: fixed;
+    left: 39%;
+    margin-bottom: 20px;
+}
+
+
+#countdown {
+    position: fixed;
+    top: 30%;
+    left: 46%;
 }

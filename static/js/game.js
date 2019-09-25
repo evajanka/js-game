@@ -1,41 +1,62 @@
+var snake1 = new Snake(0, 1, "right", "blue");
+var snake2 = new Snake(31, 30, "left", "green");
+var fruit = new Create_Fruit();
+var alert;
+
 function Snake(x, y, dir, color) {
     this.x = x;
     this.y = y;
     this.body = [[x, y]];
     this.dir = dir;
     this.color = color;
-}
-var snake1 = new Snake(1, 1, "right", "blue");
-var snake2 = new Snake(30, 30, "left", "green");
 
-function draw(snake) {
-    for (let i = 0; i < snake.body.length; i++) {
-        let pos = "x" + snake.body[i][0] + "y" + snake.body[i][1];
-        document.getElementById(pos).style.backgroundColor = snake.color
+function collisionWall() {
+    if ((snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) && (snake2.x > 30 || snake2.x < 0 || snake2.y > 30 || snake2.y < 0)) {
+        alert = "TIE";
+        return true
     }
-}
-function collisionWall(snake) {
-    if (snake.x > 30 || snake.x < 0 || snake.y > 30 || snake.y < 0){
-        window.alert(snake.color + " need glasses ;)")
+    if (snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) {
+        alert = snake1.color + " needs glasses";
+        return true
+    }
+    if (snake2.x > 30 || snake2.x < 0 || snake2.y > 30 || snake2.y < 0) {
+        alert = snake2.color + " needs glasses";
+        return true
     }
 }
 
 function collisionSnake() {
-    if (snake1.body[0] === snake2.body[0]) window.alert("TIE");
-    for (elem of snake1.body){
-        if (elem[0] === snake1.x && elem[1] === snake1.y && snake1.body.length > 3 ) window.alert("Snake1 ate himself and dieded very badly")
+    if (snake1.x === snake2.x && snake1.y === snake2.y) {
+        alert = "Tie";
+        return true
     }
-    for (elem of snake2.body){
-        if (elem[0] === snake2.x && elem[1] === snake2.y && snake2.body.length > 3 ) window.alert("Snake2 ate himself and dieded very badly")
+    for (let i = 1; i < snake1.body.length; i++) {
+        if (snake1.body[i][0] === snake1.x && snake1.body[i][1] === snake1.y && snake1.body.length > 3) {
+            alert = "Blue ate himself ";
+            return true
+        }
     }
-    for (elem of snake1.body){
-        if (elem[0] === snake2.x && elem[1] === snake2.y) window.alert("Snake2 killed snake1")
+    for (let i = 1; i < snake2.body.length; i++) {
+        if (snake2.body[i][0] === snake2.x && snake2.body[i][0] === snake2.y && snake2.body.length > 3) {
+            alert = "Green ate himself";
+            return true
+        }
     }
-    for (elem of snake2.body){
-        if (elem[0] === snake1.x && elem[1] === snake1.y) window.alert("Snake2 killed snake1")
+    for (elem of snake1.body) {
+        if (elem[0] === snake2.x && elem[1] === snake2.y) {
+            alert = "Green killed blue";
+            return true
+        }
+    }
+    for (elem of snake2.body) {
+        if (elem[0] === snake1.x && elem[1] === snake1.y) {
+            alert = "Blue killed Green";
+            return true
+        }
     }
 
 }
+
 function move(snake) {
     if (snake.dir === "up") snake.y += -1;
     if (snake.dir === "down") snake.y += 1;
@@ -44,7 +65,6 @@ function move(snake) {
     snake.body.unshift([snake.x, snake.y]);
     snake.body.pop();
 }
-
 
 
 document.addEventListener("keydown", checkkeys);
@@ -74,54 +94,75 @@ function Create_Fruit() {
     this.y = Math.floor(Math.random() * 31);
     this.img = document.createElement("img");
     this.img.src = "static/images/apple.png";
-    this.img.setAttribute("width", "20");
-    this.img.setAttribute("height", "20");
+    this.img.setAttribute("width", "23");
+    this.img.setAttribute("height", "23");
+
 }
 
 
-var fruit =  new Create_Fruit();
-
-
 function randomize_fruit() {
-    let fruit_to_put = document.getElementById("x"+fruit.x + "y"+fruit.y);
+    let fruit_to_put = document.getElementById("x" + fruit.x + "y" + fruit.y);
     fruit_to_put.style.padding = 0;
     fruit_to_put.appendChild(fruit.img);
 }
 
 
-window.addEventListener('load', randomize_fruit(fruit));
-
 
 
 function eat_fruit(snake) {
-    if (snake.x === fruit.x &&
-        snake.y === fruit.y) {
+    if (snake.x === fruit.x && snake.y === fruit.y) {
         snake.body.push(snake.body[-1]);
-        let cell_empty = document.getElementById("x"+fruit.x + "y" + fruit.y);
+        let cell_empty = document.getElementById("x" + fruit.x + "y" + fruit.y);
         cell_empty.style.padding = 10;
         cell_empty.innerHTML = "";
         fruit.x = Math.floor(Math.random() * 31);
         fruit.y = Math.floor(Math.random() * 31);
         randomize_fruit()
-        }
+    }
 }
 
+function redirect() {
+    window.location.href = "http://127.0.0.1:5000/"
+}
 
 function game() {
-    setInterval(function () {
+    document.getElementById("board").removeAttribute("hidden");
+    randomize_fruit(fruit);
+    let interval = setInterval(function () {
         clear();
         move(snake1);
         move(snake2);
-        collisionWall(snake1);
-        collisionWall(snake2);
-        collisionSnake();
+        if (collisionSnake() || collisionWall()) {
+            clearInterval(interval);
+            let alertbox = document.getElementById("alertbox");
+            alertbox.removeAttribute("hidden");
+            alertbox.innerText = alert;
+            setTimeout(redirect, 3666);
+        }
         draw(snake1);
         draw(snake2);
+
         eat_fruit(snake1);
         eat_fruit(snake2)
 
-    }, 500);
+    }, 250);
 
 }
 
-game();
+function countdown() {
+    var timeleft = 4;
+    var downloadTimer = setInterval(function () {
+        document.getElementById("countdown").innerHTML = timeleft - 1;
+        timeleft -= 1;
+        if (timeleft <= 0) {
+            clearInterval(downloadTimer);
+            document.getElementById("countdown").innerHTML = "GO!";
+            setTimeout(f=()=>{document.getElementById("countdown").parentNode.removeChild(document.getElementById("countdown"))},666)
+
+
+        }
+    }, 1000);
+}
+
+countdown();
+setTimeout(game, 4666);
