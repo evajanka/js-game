@@ -3,6 +3,7 @@ var snake2 = new Snake(31, 30, "left", "green");
 var fruit = new Create_Fruit();
 var alert;
 
+console.log(document.cookie);
 function draw(snake) {
     for (let i = 0; i < snake.body.length; i++) {
         let pos = "x" + snake.body[i][0] + "y" + snake.body[i][1];
