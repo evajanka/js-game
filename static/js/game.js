@@ -3,12 +3,20 @@ var snake2 = new Snake(31, 30, "left", "green");
 var fruit = new Create_Fruit();
 var alert;
 
+function draw(snake) {
+    for (let i = 0; i < snake.body.length; i++) {
+        let pos = "x" + snake.body[i][0] + "y" + snake.body[i][1];
+        document.getElementById(pos).style.backgroundColor = snake.color
+    }
+}
+
 function Snake(x, y, dir, color) {
     this.x = x;
     this.y = y;
     this.body = [[x, y]];
     this.dir = dir;
     this.color = color;
+}
 
 function collisionWall() {
     if ((snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) && (snake2.x > 30 || snake2.x < 0 || snake2.y > 30 || snake2.y < 0)) {
