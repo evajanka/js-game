@@ -1,22 +1,61 @@
-body {
-    padding: 80px 20px;
-    background-image: url("../images/ricepaper.png");
-    background-repeat: repeat;
+game-body {
+    padding: 20px 28%;
     font-family: 'Acme', sans-serif;
     color: black;
+    overflow: hidden;
 }
 
-.game-cell {
-    cursor: pointer;
-    border: 1px solid black;
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    margin: 3px;
-    color: grey;
-    vertical-align: middle;
+table {
+    padding-top: 60px;
+    display: block;
+    border-spacing: 0
 }
 
-navbar {
-    background-color: transparent;
+td {
+    padding: 10px;
+    border: black 1px solid;
+}
+
+layout-body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+.brand-logo >img {
+	width: 50px;
+	height: 50px;
+	margin-top: 5px;
+}
+
+/* Game modes */
+.bg-card-user {
+	background: rgba(0,77,64,.5);
+	padding: 15px 0;
+}
+.truncate >img {
+	width: 120px;
+}
+
+footer .foot-text {
+	margin-top: 10px;
+    padding: 12px;
+    border: black 1px solid;
+}
+
+#alertbox {
+    position: fixed;
+    left: 39%;
+    margin-bottom: 20px;
+}
+
+
+#countdown {
+    position: fixed;
+    top: 30%;
+    left: 46%;
 }

@@ -1,1 +1,42 @@
-<a href= "{{url_for('game')}}">Start</a>
+{% extends 'layout.html' %}
+{% block head %}
+        <link href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" rel="stylesheet" id="bootstrap-css">
+{% endblock %}
+{% block content %}
+<body class="layout-body">
+    <nav class="grey darken-4">
+        <div class="nav-wrapper">
+            <a class="brand-logo center"><img src="static/images/python-logo-transparent-17.png">Kígyóes</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+            </ul>
+        </div>
+    </nav>
+        <div class="container">
+                 <div class="row">
+                     <div class="col-sm center">
+                         <h4 class="truncate bg-card-user"><img src="static/images/101504efe6d9d09389cc4a68c932cf38-anaconda-snake-illustration-by-vexels.png"> <br>
+                             <a href="{{url_for('game')}}" data-activates="slide-out" class="button-collapse white-text waves-effect waves-light btn">Start 1 player mod</a>
+                         </h4>
+                     </div>
+                 </div>
+                <div class="row">
+                    <div class="col-sm center">
+                        <h4 class="truncate bg-card-user"><img src="static/images/python-logo-transparent-17.png"> <br>
+                            <a href="{{url_for('game')}}" data-activates="slide-out" class="button-collapse white-text waves-effect waves-light btn">Start 2 player mod</a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <footer class="page-footer grey darken-4">
+        <div class="footer-copyright">
+            <div class="container center">
+                Copyright © 2019 - Kígyóes
+            </div>
+        </div>
+    </footer>
+</body>
+{% endblock %}
