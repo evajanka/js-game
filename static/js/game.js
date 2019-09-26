@@ -83,7 +83,7 @@ function collisionSnake() {
             }
         }
         for (let i = 1; i < snake2.body.length; i++) {
-            if (snake2.body[i][0] === snake2.x && snake2.body[i][0] === snake2.y && snake2.body.length > 3) {
+            if (snake2.body[i][0] === snake2.x && snake2.body[i][1] === snake2.y && snake2.body.length > 3) {
                 alert = "Green ate himself";
                 return true
             }
