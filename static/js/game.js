@@ -1,7 +1,10 @@
-var snake1 = new Snake(0, 1, "right", "blue");
-var snake2 = new Snake(31, 30, "left", "green");
 var fruit = new Create_Fruit();
 var alert;
+var snake1 = new Snake(0, 1, "right", "blue");
+
+if (document.cookie === "gamemode=two") var snake2 = new Snake(31, 30, "left", "green");
+
+
 
 function draw(snake) {
     for (let i = 0; i < snake.body.length; i++) {
@@ -20,53 +23,69 @@ function Snake(x, y, dir, color) {
 
 
 function collisionWall() {
-    if ((snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) && (snake2.x > 30 || snake2.x < 0 || snake2.y > 30 || snake2.y < 0)) {
-        alert = "TIE";
-        return true
-    }
-    if (snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) {
-        alert = snake1.color + " needs glasses";
-        return true
-    }
-    if (snake2.x > 30 || snake2.x < 0 || snake2.y > 30 || snake2.y < 0) {
-        alert = snake2.color + " needs glasses";
-        return true
+    if (document.cookie === "gamemode=one") {
+        if (snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) {
+            alert = snake1.color + " needs glasses";
+            return true
+        }
+    } else {
+        if ((snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) && (snake2.x > 30 || snake2.x < 0 || snake2.y > 30 || snake2.y < 0)) {
+            alert = "TIE";
+            return true
+        }
+        if (snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) {
+            alert = snake1.color + " needs glasses";
+            return true
+        }
+        if (snake2.x > 30 || snake2.x < 0 || snake2.y > 30 || snake2.y < 0) {
+            alert = snake2.color + " needs glasses";
+            return true
+        }
     }
 }
-
 
 function collisionSnake() {
-    if (snake1.x === snake2.x && snake1.y === snake2.y) {
-        alert = "Tie";
-        return true
-    }
-    for (let i = 1; i < snake1.body.length; i++) {
-        if (snake1.body[i][0] === snake1.x && snake1.body[i][1] === snake1.y && snake1.body.length > 3) {
-            alert = "Blue ate himself ";
-            return true
-        }
-    }
-    for (let i = 1; i < snake2.body.length; i++) {
-        if (snake2.body[i][0] === snake2.x && snake2.body[i][0] === snake2.y && snake2.body.length > 3) {
-            alert = "Green ate himself";
-            return true
-        }
-    }
-    for (elem of snake1.body) {
-        if (elem[0] === snake2.x && elem[1] === snake2.y) {
-            alert = "Green killed blue";
-            return true
-        }
-    }
-    for (elem of snake2.body) {
-        if (elem[0] === snake1.x && elem[1] === snake1.y) {
-            alert = "Blue killed Green";
-            return true
-        }
-    }
 
+    if (document.cookie === "gamemode=one") {
+
+        for (let i = 1; i < snake1.body.length; i++) {
+            if (snake1.body[i][0] === snake1.x && snake1.body[i][1] === snake1.y && snake1.body.length > 3) {
+                alert = "Blue ate himself ";
+                return true
+            }
+        }
+    } else {
+        if (snake1.x === snake2.x && snake1.y === snake2.y) {
+            alert = "Tie";
+            return true
+        }
+        for (let i = 1; i < snake1.body.length; i++) {
+            if (snake1.body[i][0] === snake1.x && snake1.body[i][1] === snake1.y && snake1.body.length > 3) {
+                alert = "Blue ate himself ";
+                return true
+            }
+        }
+        for (let i = 1; i < snake2.body.length; i++) {
+            if (snake2.body[i][0] === snake2.x && snake2.body[i][0] === snake2.y && snake2.body.length > 3) {
+                alert = "Green ate himself";
+                return true
+            }
+        }
+        for (elem of snake1.body) {
+            if (elem[0] === snake2.x && elem[1] === snake2.y) {
+                alert = "Green killed blue";
+                return true
+            }
+        }
+        for (elem of snake2.body) {
+            if (elem[0] === snake1.x && elem[1] === snake1.y) {
+                alert = "Blue killed Green";
+                return true
+            }
+        }
+
+    }
 }
-
 
 function move(snake) {
     if (snake.dir === "up") snake.y += -1;
@@ -114,7 +133,8 @@ function Create_Fruit() {
 
 
 function random(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;}
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 
 function randomize_fruit() {
@@ -137,7 +157,7 @@ function eat_fruit(snake) {
 }
 
 function redirect() {
-    window.location.href = "http://127.0.0.1:5000/deletecookie"
+    window.location.href = "http://127.0.0.1:5000/"
 }
 
 
@@ -149,7 +169,9 @@ function countdown() {
         if (timeleft <= 0) {
             clearInterval(downloadTimer);
             document.getElementById("countdown").innerHTML = "GO!";
-            setTimeout(f=()=>{document.getElementById("countdown").parentNode.removeChild(document.getElementById("countdown"))},666)
+            setTimeout(f = () => {
+                document.getElementById("countdown").parentNode.removeChild(document.getElementById("countdown"))
+            }, 666)
 
 
         }
@@ -157,22 +179,30 @@ function countdown() {
 }
 
 
-
-function game_1player(){
+function game_1player() {
+    document.getElementById("board").removeAttribute("hidden");
+    randomize_fruit(fruit);
     let interval = setInterval(function () {
         clear();
         move(snake1);
-        collisionWall(snake1);
-        collisionSnake();
+        if (collisionSnake() || collisionWall()) {
+            clearInterval(interval);
+            let alertbox = document.getElementById("alertbox");
+            alertbox.removeAttribute("hidden");
+            alertbox.innerText = alert;
+            setTimeout(redirect, 3666);
+        }
         draw(snake1);
         eat_fruit(snake1);
 
-    }, 500);
+    }, 250);
 
 }
 
 function game_2players() {
- let interval = setInterval(function () {
+    document.getElementById("board").removeAttribute("hidden");
+    randomize_fruit(fruit);
+    let interval = setInterval(function () {
         clear();
         move(snake1);
         move(snake2);
@@ -195,11 +225,10 @@ function game_2players() {
 
 function main() {
     console.log(document.cookie);
-    if (document.cookie === "gamemode=one"){
+
+    if (document.cookie === "gamemode=one") {
         game_1player();
-        console.log("1player")
-    }
-    else if (document.cookie === "gamemode=two") game_2players();
+    } else if (document.cookie === "gamemode=two") game_2players();
 
 }
 
