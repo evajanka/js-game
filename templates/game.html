@@ -9,10 +9,19 @@
 <body class="game-body">
 
 <div class="row">
+        <div class=col-md-6 text-right">
+        <p id="player1" class="btn btn-primary"> Player1 </p>
+        </div>
+        {% if request.cookies.get("gamemode")=="two" %}
+            <div>
+            <p id="player2" class="btn btn-primary"> Player2 </p>
+            </div>
+        {% endif %}
     <div class="align-content-sm-center">
         <div id="alertbox" class="alert alert-info text-center font-weight-bold" hidden role="alert"></div>
     </div>
 </div>
+
 
 <div class="display-1 text-center" id="countdown"></div>
     <table hidden id="board">
@@ -24,6 +33,10 @@
             </tr>
         {% endfor %}
     </table>
+
+
+
+
 
 </body>
 

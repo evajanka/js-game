@@ -1,8 +1,9 @@
 var fruit = new Create_Fruit();
 var alert;
-var snake1 = new Snake(0, 1, "right", "blue");
+var snake1 = new Snake(0, 1, "right", "blue", 0);
 
-if (document.cookie === "gamemode=two") var snake2 = new Snake(31, 30, "left", "green");
+
+if (document.cookie === "gamemode=two") var snake2 = new Snake(31, 30, "left", "green", 0);
 
 console.log(document.cookie);
 function draw(snake) {
@@ -12,12 +13,13 @@ function draw(snake) {
     }
 }
 
-function Snake(x, y, dir, color) {
+function Snake(x, y, dir, color,score) {
     this.x = x;
     this.y = y;
     this.body = [[x, y]];
     this.dir = dir;
     this.color = color;
+    this.score = score;
 }
 
 
@@ -146,6 +148,9 @@ function randomize_fruit() {
 function eat_fruit(snake) {
     if (snake.x === fruit.x && snake.y === fruit.y) {
         snake.body.push(snake.body[-1]);
+        snake.score += 1;
+        document.getElementById('player1').innerHTML = snake1.score;
+        document.getElementById('player2').innerHTML = snake2.score;
         let cell_empty = document.getElementById("x" + fruit.x + "y" + fruit.y);
         cell_empty.style.padding = 10;
         cell_empty.innerHTML = "";
@@ -233,3 +238,5 @@ function main() {
 
 countdown();
 setTimeout(main, 4666);
+
+console.log(snake1.score)
