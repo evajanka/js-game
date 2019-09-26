@@ -13,21 +13,20 @@ function draw(snake) {
     if (snake.color === "green") {
         snakehead = "greensnakehead";
         snakebody = "greensnakebody"
-    }
-    else{
+    } else {
         snakehead = "bluesnakehead";
         snakebody = "bluesnakebody"
     }
 
 
-for (let i = 0; i < snake.body.length; i++) {
-    let pos = "x" + snake.body[i][0] + "y" + snake.body[i][1];
-    if (i === 0) document.getElementById(pos).className = snakehead;
-    else {
-        document.getElementById(pos).className = snakebody;
+    for (let i = 0; i < snake.body.length; i++) {
+        let pos = "x" + snake.body[i][0] + "y" + snake.body[i][1];
+        if (i === 0) document.getElementById(pos).className = snakehead;
+        else {
+            document.getElementById(pos).className = snakebody;
+        }
+        document.getElementById(pos).style.transform = "rotate(" + snake.angle + "deg)"
     }
-    document.getElementById(pos).style.transform = "rotate(" + snake.angle + "deg)"
-}
 }
 
 function Snake(x, y, dir, color, angle) {
@@ -170,7 +169,11 @@ function random(min, max) {
 
 
 function randomize_fruit() {
-    let fruit_to_put = document.getElementById("x" + fruit.x + "y" + fruit.y);
+    do{
+    fruit.x = random(1, 31);
+    fruit.y = random(1, 31);
+    var fruit_to_put = document.getElementById("x" + fruit.x + "y" + fruit.y);
+    }while (fruit_to_put.className !== "clear");
     fruit_to_put.style.padding = 0;
     fruit_to_put.style.transform = "rotate(0deg)";
     fruit_to_put.appendChild(fruit.img);
@@ -183,8 +186,6 @@ function eat_fruit(snake) {
         let cell_empty = document.getElementById("x" + fruit.x + "y" + fruit.y);
         cell_empty.style.padding = 10;
         cell_empty.innerHTML = "";
-        fruit.x = random(1, 31);
-        fruit.y = random(1, 31);
         randomize_fruit()
     }
 }
@@ -214,6 +215,7 @@ function countdown() {
 
 function game_1player() {
     document.getElementById("board").removeAttribute("hidden");
+    clear();
     randomize_fruit(fruit);
     let interval = setInterval(function () {
         clear();
@@ -234,6 +236,7 @@ function game_1player() {
 
 function game_2players() {
     document.getElementById("board").removeAttribute("hidden");
+    clear();
     randomize_fruit(fruit);
     let interval = setInterval(function () {
         clear();
