@@ -239,4 +239,3 @@ function main() {
 countdown();
 setTimeout(main, 4666);
 
-console.log(snake1.score)
