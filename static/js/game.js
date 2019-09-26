@@ -4,8 +4,7 @@ var snake1 = new Snake(0, 1, "right", "blue");
 
 if (document.cookie === "gamemode=two") var snake2 = new Snake(31, 30, "left", "green");
 
-
-
+console.log(document.cookie);
 function draw(snake) {
     for (let i = 0; i < snake.body.length; i++) {
         let pos = "x" + snake.body[i][0] + "y" + snake.body[i][1];
@@ -25,7 +24,7 @@ function Snake(x, y, dir, color) {
 function collisionWall() {
     if (document.cookie === "gamemode=one") {
         if (snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) {
-            alert = snake1.color + " needs glasses";
+            alert = "Blue hit the wall";
             return true
         }
     } else {
@@ -34,11 +33,11 @@ function collisionWall() {
             return true
         }
         if (snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) {
-            alert = snake1.color + " needs glasses";
+            alert = "Blue hit the wall";
             return true
         }
         if (snake2.x > 30 || snake2.x < 0 || snake2.y > 30 || snake2.y < 0) {
-            alert = snake2.color + " needs glasses";
+            alert = "Green hit the wall";
             return true
         }
     }
@@ -73,7 +72,7 @@ function collisionSnake() {
         }
         for (elem of snake1.body) {
             if (elem[0] === snake2.x && elem[1] === snake2.y) {
-                alert = "Green killed blue";
+                alert = "Green killed Blue";
                 return true
             }
         }

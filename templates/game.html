@@ -7,8 +7,14 @@
 {% block content %}
 
 <body class="game-body">
-    <div id ="alertbox" class="alert alert-info w-25 text-center" hidden role="alert"></div>
-    <div class="display-1 text-center" id="countdown"></div>
+
+<div class="row">
+    <div class="align-content-sm-center">
+        <div id="alertbox" class="alert alert-info text-center font-weight-bold" hidden role="alert"></div>
+    </div>
+</div>
+
+<div class="display-1 text-center" id="countdown"></div>
     <table hidden id="board">
         {% for i in range(1,31,1) %}
             <tr>
@@ -18,6 +24,7 @@
             </tr>
         {% endfor %}
     </table>
+
 </body>
 
 {% endblock %}
