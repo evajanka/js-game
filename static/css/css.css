@@ -4,6 +4,39 @@
     flex-direction: column;
 }
 
+.bluesnakehead {
+    background: url("/static/images/bluesnakehead.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.greensnakehead {
+    background: url("/static/images/greensnakehead.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.bluesnakebody {
+    background-image: url("/static/images/bluesnakebody.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.greensnakebody {
+    background-image: url("/static/images/greensnakebody.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.clear {
+    background-color: transparent;
+    padding: 12px;
+    border: black 1px solid;
+}
+
 table {
     position: fixed;
     horiz-align: center;
@@ -22,29 +55,30 @@ td {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-  }
+}
 
-  main {
+main {
     flex: 1 0 auto;
-  }
+}
 
-.brand-logo >img {
-	width: 50px;
-	height: 50px;
-	margin-top: 5px;
+.brand-logo > img {
+    width: 50px;
+    height: 50px;
+    margin-top: 5px;
 }
 
 /* Game modes */
 .bg-card-user {
-	background: rgba(0,77,64,.5);
-	padding: 15px 0;
+    background: rgba(0, 77, 64, .5);
+    padding: 15px 0;
 }
-.truncate >img {
-	width: 120px;
+
+.truncate > img {
+    width: 120px;
 }
 
 footer .foot-text {
-	margin-top: 10px;
+    margin-top: 10px;
     padding: 12px;
     border: black 1px solid;
 }

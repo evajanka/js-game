@@ -1,23 +1,42 @@
 var fruit = new Create_Fruit();
 var alert;
-var snake1 = new Snake(0, 1, "right", "blue");
+var snake1 = new Snake(0, 1, "right", "blue", 90);
 
-if (document.cookie === "gamemode=two") var snake2 = new Snake(31, 30, "left", "green");
+if (document.cookie === "gamemode=two") var snake2 = new Snake(31, 30, "left", "green", 270);
 
 console.log(document.cookie);
+
 function draw(snake) {
-    for (let i = 0; i < snake.body.length; i++) {
-        let pos = "x" + snake.body[i][0] + "y" + snake.body[i][1];
-        document.getElementById(pos).style.backgroundColor = snake.color
+    let snakebody;
+    let snakehead;
+
+    if (snake.color === "green") {
+        snakehead = "greensnakehead";
+        snakebody = "greensnakebody"
     }
+    else{
+        snakehead = "bluesnakehead";
+        snakebody = "bluesnakebody"
+    }
+
+
+for (let i = 0; i < snake.body.length; i++) {
+    let pos = "x" + snake.body[i][0] + "y" + snake.body[i][1];
+    if (i === 0) document.getElementById(pos).className = snakehead;
+    else {
+        document.getElementById(pos).className = snakebody;
+    }
+    document.getElementById(pos).style.transform = "rotate(" + snake.angle + "deg)"
+}
 }
 
-function Snake(x, y, dir, color) {
+function Snake(x, y, dir, color, angle) {
     this.x = x;
     this.y = y;
     this.body = [[x, y]];
     this.dir = dir;
     this.color = color;
+    this.angle = angle;
 }
 
 
@@ -72,13 +91,13 @@ function collisionSnake() {
         }
         for (elem of snake1.body) {
             if (elem[0] === snake2.x && elem[1] === snake2.y) {
-                alert = "Green killed Blue";
+                alert = "Blue killed Green";
                 return true
             }
         }
         for (elem of snake2.body) {
             if (elem[0] === snake1.x && elem[1] === snake1.y) {
-                alert = "Blue killed Green";
+                alert = "Green killed Blue";
                 return true
             }
         }
@@ -87,10 +106,24 @@ function collisionSnake() {
 }
 
 function move(snake) {
-    if (snake.dir === "up") snake.y += -1;
-    if (snake.dir === "down") snake.y += 1;
-    if (snake.dir === "right") snake.x += 1;
-    if (snake.dir === "left") snake.x += -1;
+    if (snake.dir === "up") {
+        snake.y += -1;
+        snake.angle = 180
+    }
+    if (snake.dir === "down") {
+        snake.y += 1;
+        snake.angle = 0
+    }
+
+    if (snake.dir === "right") {
+        snake.x += 1;
+        snake.angle = 270
+    }
+
+    if (snake.dir === "left") {
+        snake.x += -1;
+        snake.angle = 90
+    }
     snake.body.unshift([snake.x, snake.y]);
     snake.body.pop();
 }
@@ -115,18 +148,18 @@ function checkkeys() {
 function clear() {
     cells = document.getElementsByTagName("TD");
     for (cell of cells) {
-        cell.style.backgroundColor = "white";
+        cell.className = "clear";
     }
 }
 
 
 function Create_Fruit() {
-    this.x = Math.floor(Math.random() * 31);
-    this.y = Math.floor(Math.random() * 31);
+    this.x = random(1, 31);
+    this.y = random(1, 31);
     this.img = document.createElement("img");
     this.img.src = "static/images/apple.png";
-    this.img.setAttribute("width", "23");
-    this.img.setAttribute("height", "23");
+    this.img.setAttribute("width", "22");
+    this.img.setAttribute("height", "22");
 
 }
 
@@ -139,6 +172,7 @@ function random(min, max) {
 function randomize_fruit() {
     let fruit_to_put = document.getElementById("x" + fruit.x + "y" + fruit.y);
     fruit_to_put.style.padding = 0;
+    fruit_to_put.style.transform = "rotate(0deg)";
     fruit_to_put.appendChild(fruit.img);
 }
 
@@ -194,7 +228,7 @@ function game_1player() {
         draw(snake1);
         eat_fruit(snake1);
 
-    }, 250);
+    }, 180);
 
 }
 
@@ -218,7 +252,7 @@ function game_2players() {
         eat_fruit(snake1);
         eat_fruit(snake2)
 
-    }, 250);
+    }, 180);
 
 }
 
