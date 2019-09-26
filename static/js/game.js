@@ -18,6 +18,7 @@ function Snake(x, y, dir, color) {
     this.color = color;
 }
 
+
 function collisionWall() {
     if ((snake1.x > 30 || snake1.x < 0 || snake1.y > 30 || snake1.y < 0) && (snake2.x > 30 || snake2.x < 0 || snake2.y > 30 || snake2.y < 0)) {
         alert = "TIE";
@@ -32,6 +33,7 @@ function collisionWall() {
         return true
     }
 }
+
 
 function collisionSnake() {
     if (snake1.x === snake2.x && snake1.y === snake2.y) {
@@ -65,6 +67,7 @@ function collisionSnake() {
 
 }
 
+
 function move(snake) {
     if (snake.dir === "up") snake.y += -1;
     if (snake.dir === "down") snake.y += 1;
@@ -77,6 +80,7 @@ function move(snake) {
 
 document.addEventListener("keydown", checkkeys);
 
+
 function checkkeys() {
     if (event.keyCode === 87 && snake1.dir !== "down") snake1.dir = "up";
     if (event.keyCode === 65 && snake1.dir !== "right") snake1.dir = "left";
@@ -88,6 +92,7 @@ function checkkeys() {
     if (event.keyCode === 40 && snake2.dir !== "up") snake2.dir = "down";
     if (event.keyCode === 39 && snake2.dir !== "left") snake2.dir = "right";
 }
+
 
 function clear() {
     cells = document.getElementsByTagName("TD");
@@ -108,13 +113,15 @@ function Create_Fruit() {
 }
 
 
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;}
+
+
 function randomize_fruit() {
     let fruit_to_put = document.getElementById("x" + fruit.x + "y" + fruit.y);
     fruit_to_put.style.padding = 0;
     fruit_to_put.appendChild(fruit.img);
 }
-
-
 
 
 function eat_fruit(snake) {
@@ -123,20 +130,49 @@ function eat_fruit(snake) {
         let cell_empty = document.getElementById("x" + fruit.x + "y" + fruit.y);
         cell_empty.style.padding = 10;
         cell_empty.innerHTML = "";
-        fruit.x = Math.floor(Math.random() * 31);
-        fruit.y = Math.floor(Math.random() * 31);
+        fruit.x = random(1, 31);
+        fruit.y = random(1, 31);
         randomize_fruit()
     }
 }
 
 function redirect() {
-    window.location.href = "http://127.0.0.1:5000/"
+    window.location.href = "http://127.0.0.1:5000/deletecookie"
 }
 
-function game() {
-    document.getElementById("board").removeAttribute("hidden");
-    randomize_fruit(fruit);
+
+function countdown() {
+    var timeleft = 4;
+    var downloadTimer = setInterval(function () {
+        document.getElementById("countdown").innerHTML = timeleft - 1;
+        timeleft -= 1;
+        if (timeleft <= 0) {
+            clearInterval(downloadTimer);
+            document.getElementById("countdown").innerHTML = "GO!";
+            setTimeout(f=()=>{document.getElementById("countdown").parentNode.removeChild(document.getElementById("countdown"))},666)
+
+
+        }
+    }, 1000);
+}
+
+
+
+function game_1player(){
     let interval = setInterval(function () {
+        clear();
+        move(snake1);
+        collisionWall(snake1);
+        collisionSnake();
+        draw(snake1);
+        eat_fruit(snake1);
+
+    }, 500);
+
+}
+
+function game_2players() {
+ let interval = setInterval(function () {
         clear();
         move(snake1);
         move(snake2);
@@ -157,20 +193,15 @@ function game() {
 
 }
 
-function countdown() {
-    var timeleft = 4;
-    var downloadTimer = setInterval(function () {
-        document.getElementById("countdown").innerHTML = timeleft - 1;
-        timeleft -= 1;
-        if (timeleft <= 0) {
-            clearInterval(downloadTimer);
-            document.getElementById("countdown").innerHTML = "GO!";
-            setTimeout(f=()=>{document.getElementById("countdown").parentNode.removeChild(document.getElementById("countdown"))},666)
+function main() {
+    console.log(document.cookie);
+    if (document.cookie === "gamemode=one"){
+        game_1player();
+        console.log("1player")
+    }
+    else if (document.cookie === "gamemode=two") game_2players();
 
-
-        }
-    }, 1000);
 }
 
 countdown();
-setTimeout(game, 4666);
+setTimeout(main, 4666);
