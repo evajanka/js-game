@@ -1,4 +1,4 @@
-var fruit = new Create_Fruit();
+var fruit = new CreateFruit();
 var alert;
 var snake1 = new Snake(0, 1, "right", "blue", 90);
 
@@ -128,10 +128,9 @@ function move(snake) {
 }
 
 
-document.addEventListener("keydown", checkkeys);
 
 
-function checkkeys() {
+function checkKeys() {
     if (event.keyCode === 87 && snake1.dir !== "down") snake1.dir = "up";
     if (event.keyCode === 65 && snake1.dir !== "right") snake1.dir = "left";
     if (event.keyCode === 83 && snake1.dir !== "up") snake1.dir = "down";
@@ -152,7 +151,7 @@ function clear() {
 }
 
 
-function Create_Fruit() {
+function CreateFruit() {
     this.x = random(1, 31);
     this.y = random(1, 31);
     this.img = document.createElement("img");
@@ -168,25 +167,25 @@ function random(min, max) {
 }
 
 
-function randomize_fruit() {
-    do{
-    fruit.x = random(1, 31);
-    fruit.y = random(1, 31);
-    var fruit_to_put = document.getElementById("x" + fruit.x + "y" + fruit.y);
-    }while (fruit_to_put.className !== "clear");
-    fruit_to_put.style.padding = 0;
-    fruit_to_put.style.transform = "rotate(0deg)";
-    fruit_to_put.appendChild(fruit.img);
+function randomizeFruit() {
+    do {
+        fruit.x = random(1, 31);
+        fruit.y = random(1, 31);
+        var cellFruit = document.getElementById("x" + fruit.x + "y" + fruit.y);
+    } while (cellFruit.className !== "clear");
+    cellFruit.style.padding = 0;
+    cellFruit.style.transform = "rotate(0deg)";
+    cellFruit.appendChild(fruit.img);
 }
 
 
-function eat_fruit(snake) {
+function eatFruit(snake) {
     if (snake.x === fruit.x && snake.y === fruit.y) {
         snake.body.push(snake.body[-1]);
         let cell_empty = document.getElementById("x" + fruit.x + "y" + fruit.y);
         cell_empty.style.padding = 10;
         cell_empty.innerHTML = "";
-        randomize_fruit()
+        randomizeFruit()
     }
 }
 
@@ -212,50 +211,51 @@ function countdown() {
     }, 1000);
 }
 
+function checkCollisions(interval) {
+    if (collisionSnake() || collisionWall()) {
+        clearInterval(interval);
+        let alertbox = document.getElementById("alertbox");
+        alertbox.removeAttribute("hidden");
+        alertbox.innerText = alert;
+        setTimeout(redirect, 3666);
+    }
+}
 
-function game_1player() {
+function gameSetup() {
     document.getElementById("board").removeAttribute("hidden");
     clear();
-    randomize_fruit(fruit);
+    randomizeFruit(fruit);
+    document.addEventListener("keydown", checkKeys);
+
+
+}
+
+function gamemode1Player() {
+    gameSetup();
     let interval = setInterval(function () {
         clear();
         move(snake1);
-        if (collisionSnake() || collisionWall()) {
-            clearInterval(interval);
-            let alertbox = document.getElementById("alertbox");
-            alertbox.removeAttribute("hidden");
-            alertbox.innerText = alert;
-            setTimeout(redirect, 3666);
-        }
+        checkCollisions(interval);
         draw(snake1);
-        eat_fruit(snake1);
+        eatFruit(snake1);
 
     }, 180);
 
 }
 
-function game_2players() {
-    document.getElementById("board").removeAttribute("hidden");
-    clear();
-    randomize_fruit(fruit);
+function gamemode2player() {
+    gameSetup();
     let interval = setInterval(function () {
         clear();
         move(snake1);
         move(snake2);
-        if (collisionSnake() || collisionWall()) {
-            clearInterval(interval);
-            let alertbox = document.getElementById("alertbox");
-            alertbox.removeAttribute("hidden");
-            alertbox.innerText = alert;
-            setTimeout(redirect, 3666);
-        }
+        checkCollisions(interval);
         draw(snake1);
         draw(snake2);
+        eatFruit(snake1);
+        eatFruit(snake2);
 
-        eat_fruit(snake1);
-        eat_fruit(snake2)
-
-    }, 180);
+    }, 70);
 
 }
 
@@ -263,8 +263,8 @@ function main() {
     console.log(document.cookie);
 
     if (document.cookie === "gamemode=one") {
-        game_1player();
-    } else if (document.cookie === "gamemode=two") game_2players();
+        gamemode1Player();
+    } else if (document.cookie === "gamemode=two") gamemode2player();
 
 }
 
